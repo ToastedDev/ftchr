@@ -1,22 +1,28 @@
 import { useRef } from "react";
-import { fetch } from "@tauri-apps/api/http";
+import { fetch, ResponseType } from "@tauri-apps/api/http";
 
 function App() {
-  // const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   async function greet() {
-    console.log(await fetch("https://jsonplaceholder.typicode.com/todos/1"));
+    const url = inputRef.current?.value;
+    if (!url) return;
+    const res = await fetch(url, {
+      method: "GET",
+      responseType: ResponseType.Text,
+    });
+    console.log(res);
   }
 
   return (
     <form
-      className="row"
       onSubmit={(e) => {
         e.preventDefault();
         greet();
       }}
     >
-      <button type="submit">Greet</button>
+      <input type="url" placeholder="https://example.com" ref={inputRef} />
+      <button type="submit">Send</button>
     </form>
   );
 }
