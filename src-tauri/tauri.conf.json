@@ -19,6 +19,13 @@
       "http": {
         "request": true,
         "scope": ["http:**", "https:**"]
+      },
+      "path": {
+        "all": true
+      },
+      "fs": {
+        "all": true,
+        "scope": ["$APPDATA", "$APPDATA/routes.json"]
       }
     },
     "windows": [
