@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { fetch, ResponseType } from "@tauri-apps/api/http";
+import { Input } from "./components/ui/input";
+import { Button } from "./components/ui/button";
 
 function App() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -20,9 +22,10 @@ function App() {
         e.preventDefault();
         greet();
       }}
+      className="flex gap-2"
     >
-      <input type="url" placeholder="https://example.com" ref={inputRef} />
-      <button type="submit">Send</button>
+      <Input type="url" placeholder="https://example.com" ref={inputRef} />
+      <Button type="submit">Send</Button>
     </form>
   );
 }
