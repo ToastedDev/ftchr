@@ -23,6 +23,11 @@ export async function getRoutes(): Promise<Route[] | null> {
   }
 }
 
+export async function getRoute(routeId: number): Promise<Route | null> {
+  const routes = (await getRoutes()) ?? [];
+  return routes[routeId] ?? null;
+}
+
 export async function addRoute(route: Route) {
   const routes = (await getRoutes()) ?? [];
   routes.push(route);
