@@ -7,14 +7,14 @@ import {
 } from "@tauri-apps/api/fs";
 import { appDataDir } from "@tauri-apps/api/path";
 
-interface Route {
+interface Request {
   name: string;
-  url: string | null;
+  url?: string;
 }
 
-export async function getRoutes(): Promise<Route[] | null> {
+export async function getRequests(): Promise<Request[] | null> {
   try {
-    const data = await readTextFile("routes.json", {
+    const data = await readTextFile("requests.json", {
       dir: BaseDirectory.AppData,
     });
     return JSON.parse(data);
@@ -23,20 +23,20 @@ export async function getRoutes(): Promise<Route[] | null> {
   }
 }
 
-export async function getRoute(routeId: number): Promise<Route | null> {
-  const routes = (await getRoutes()) ?? [];
+export async function getRequest(routeId: number): Promise<Request | null> {
+  const routes = (await getRequests()) ?? [];
   return routes[routeId] ?? null;
 }
 
-export async function addRoute(route: Route) {
-  const routes = (await getRoutes()) ?? [];
+export async function addRequest(route: Request) {
+  const routes = (await getRequests()) ?? [];
   routes.push(route);
   if (!(await exists(await appDataDir()))) {
     await createDir(await appDataDir(), {
       recursive: true,
     });
   }
-  await writeTextFile("routes.json", JSON.stringify(routes), {
+  await writeTextFile("requests.json", JSON.stringify(routes), {
     dir: BaseDirectory.AppData,
   });
 }

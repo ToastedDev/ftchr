@@ -25,7 +25,7 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$APPDATA", "$APPDATA/routes.json"]
+        "scope": ["$APPDATA", "$APPDATA/requests.json"]
       }
     },
     "windows": [

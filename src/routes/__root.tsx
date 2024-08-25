@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { addRoute, getRoutes } from "@/utils/user-data";
+import { addRequest, getRequests } from "@/utils/user-data";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
@@ -12,13 +12,13 @@ export const Route = createRootRoute({
 function Root() {
   const queryClient = useQueryClient();
   const { data /* isLoading */ } = useQuery({
-    queryKey: ["routes"],
-    queryFn: getRoutes,
+    queryKey: ["requests"],
+    queryFn: getRequests,
   });
-  const { mutate: createRoute } = useMutation({
-    mutationFn: addRoute,
+  const { mutate: createRequest } = useMutation({
+    mutationFn: addRequest,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["routes"] });
+      queryClient.invalidateQueries({ queryKey: ["requests"] });
     },
   });
 
@@ -31,9 +31,8 @@ function Root() {
             size="icon"
             className="w-full"
             onClick={() => {
-              createRoute({
-                name: "New Route",
-                url: null,
+              createRequest({
+                name: "New Request",
               });
             }}
           >
@@ -44,8 +43,8 @@ function Root() {
             data.map((route, index) => (
               <Link
                 key={index}
-                to="/routes/$routeId"
-                params={{ routeId: index.toString() }}
+                to="/requests/$requestId"
+                params={{ requestId: index.toString() }}
                 className="p-3 border hover:bg-accent transition-colors"
               >
                 {route.name}
